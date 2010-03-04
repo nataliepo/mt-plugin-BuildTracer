@@ -1,0 +1,421 @@
+/*
+ *  control panel leyouts
+ */
+
+#tracer-control {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 120px;
+    background-color: #abc;
+    z-index: 100;
+}
+
+#control-wrapper {
+    width: 920px;
+    margin: 0 auto;
+}
+
+#control-contents {
+    width: 902px;
+    float: left;
+}
+
+#control-contents .widget-label {
+    display: none;
+}
+
+#control-contents .widget-header {
+    float: left;
+    width: 80px;
+    height: 115px;
+    border: 0;
+    margin: 0;
+}
+
+#control-contents .widget-header-inner {
+    float: left;
+    width: 80px;
+    height: 115px;
+}
+
+#control-contents .tab {
+    width: 78px;
+    height: 15px;
+    background-color: #abc;
+    display: block;
+    border: 1px solid #abc;
+    margin: 0 0 2px 0;
+    text-align: right;
+    line-height: 1.3;
+    z-index: 101;
+}
+
+#control-contents .tab:hover {
+    background-color: #789;
+}
+
+#control-contents .selected-tab {
+    border-width: 1px 0 1px 1px;
+    border-style: solid;
+    border-color: #fff;
+    background-color: #abc;
+    z-index: 200;
+}
+
+#control-contents .tab span {
+    padding: 0 3px 0 0;
+    color: #fff;
+}
+
+
+/*
+ *                SWITCHES
+ */
+
+.control-switch {
+    background-image: url("buttons.png");
+    margin-bottom: 1px;
+    width: 16px;
+    height: 16px;
+}
+
+.control-switch-selected {
+    background-image: url("buttons-selected.png");
+}
+
+.control-switch:hover {
+    background-image: url("buttons-hover.png");
+    cursor: pointer;
+}
+
+.control-switch:active {
+    background-image: url("buttons-active.png");
+}
+
+#control-toggle {
+    float: left;
+    background-position: 0 0;
+}
+
+#button-go-auto {
+    background-position: -112px 0;
+}
+
+#button-go-head {
+    background-position: -32px 0;
+}
+
+#button-go-prev {
+    background-position: -48px 0;
+}
+
+#button-go-next {
+    background-position: -64px 0;
+}
+
+#button-info-output {
+    background-position: -80px 0;
+}
+
+#button-info-var {
+    background-position: -96px 0;
+}
+
+
+#control-switch-container {
+    float: right;
+    width: 16px;
+}
+
+#control-contents .widget-content {
+    margin: 0 0 2px 0;
+    height: 116px;
+    width: 820px;
+    float: left;
+    position: relative;
+    left: -1px;
+    border: 1px solid #fff;
+    z-index: 25;
+}
+
+#control-contents .widget-content-inner {
+    padding: 2px;
+    height: 112px;
+}
+
+#control-contents .control-panel {
+    height: 112px;
+    overflow: hidden;
+}
+
+#control-contents .control-panel-body {
+    height: 88px;
+    overflow-y: scroll;
+}
+
+#control-contents .control-panel-footer {
+    position: absolute;
+    height: 24px;
+    bottom: 0px;
+    width:100%;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+#control-contents .widget-content li {
+    display: block;
+    float: left;
+    width: 120px;
+    line-height: 13px;
+    overflow-x: hidden;
+    margin: 0 12px 2px 0;
+}
+
+.legend-block {
+    float: left;
+    margin-left: 10px;
+    width: 120px;
+}
+
+.legend-block ul {
+    margin: 0;
+}
+
+#info-misc {
+    width: 200px;
+    height: 110px;
+    float: left;
+}
+
+#info-switch {
+    width: 16px;
+    float: left;
+}
+
+#info-screen {
+    float: left;
+    width: 590px;
+    height: 110px;
+    overflow-y: scroll;
+    background: #fff;
+}
+
+#info-misc table {
+    width: 180px;
+}
+
+#info-vars table {
+    width: 500px;
+}
+
+#tracer-control th {
+    background-color: #bcd;
+    padding: 0 2px;
+    border-bottom: 1px solid #9ab;
+}
+
+#tracer-control td {
+    padding: 0 2px;
+    border-bottom: 1px solid #9ab;
+    overflow: hidden;
+}
+
+.new-var {
+    background-color: #cce;
+}
+
+.gone-var {
+    background-color: #ecc;
+}
+
+div.var-key {
+    width: 90px;
+    height: 15px;
+    float: left;
+    overflow: hidden;
+    background-color: #bcd;
+    border-bottom: 1px solid #9ab;
+}
+
+div.var-val {
+    width: 100px;
+    height: 15px;
+    float: left;
+    overflow: hidden;
+    border-bottom: 1px solid #9ab;
+}
+
+div.legend-box {
+    margin: 0;
+    padding: 0 10px 0 0;
+    display: inline;
+    min-width: 16px;
+}
+
+div.legend-line {
+    margin: 0;
+    padding: 0 10px 0 0;
+}
+
+/*
+                        ==========  Tracer Element Styles
+*/
+
+#tracer-wrapper {
+    border-width: 0 1px 1px 0;
+    border-style: solid;
+    border-color: #bb9;
+    margin: 0 0 12px 0;
+    overflow: hidden;
+}
+
+#tracer {
+}
+
+.build-log-element {
+    border-width: 1px 0 0 1px;
+    border-style: solid;
+    border-color: #b99;
+    background-color: #fff;
+}
+
+.build-log-element-nest {
+    border-width: 1px 0 0 1px;
+    border-style: solid;
+    border-color: #b99;
+    margin-left: 20px;
+    background-color: #fff;
+}
+
+.plain-text {
+    color: #888;
+    background-color: #fff;
+}
+
+.block-tag {
+    background-color: #ccf;
+    border-bottom: 1px solid #fff;
+}
+
+.function-tag {
+    background-color: #beb;
+    border-bottom: 1px solid #fff;
+}
+
+.tag-name {
+    color: #944;
+    font-weight: bold;
+    margin: 0 3px 0 6px;
+}
+
+.tag-name a {
+    color: #944;
+    font-weight: bold;
+    margin: 0 3px 0 6px;
+}
+
+.tag-name a:hover {
+    text-decoration: underline;
+}
+
+.tag-args {
+    color: #480;
+    margin: 0 3px;
+}
+
+.function-output, .block-output {
+    display: inline;
+    color: #269;
+    font-style: italic;
+    margin: 0 3px;
+}
+
+.error {
+    background-color: #f44;
+}
+
+.tokens {
+    background-color: #77f;
+    padding: 5px 0 0 0;
+}
+
+.tokens-else {
+    background-color: #f77;
+    padding: 5px 0 0 0;
+}
+
+.diff-new {
+    color: #66c;
+}
+
+.diff-changed {
+    color: #282;
+}
+
+.diff-gone {
+    color: #c66;
+}
+
+.diff-vars {
+    background-color: #ddb;
+}
+
+.diff-stash {
+    background-color: #dbd;
+}
+
+.diff-section {
+    border-bottom: 1px solid #fff;
+}
+
+.diff-section ul {
+    margin: 0;
+}
+
+.diff-section ul li {
+    display: inline;
+    margin: 0 6px 0 6px;
+}
+
+.diff-value {
+    color: #468;
+    font-style: italic;
+}
+
+.time-elapsed {
+    font-size: 0.8em;
+    background-color: #fc8;
+    border: 1px solid #888;
+    padding: 0 3px 0 3px;
+    color: #888;
+}
+
+pre.output {
+    display: inline;
+    font-family: 'Courier New','Courier',monospace;
+}
+
+.selected-log {
+    background-color: #dbc;
+}
+
+.selected-log-post {
+    background-color: #dcb;
+}
+
+/*
+ *  testing
+ */
+
+#bt_popup {
+    position: fixed;
+    left: 200px;
+    top: 200px;
+    min-width: 200px;
+    border: 1px solid #789;
+    background-color: #cde;
+    padding: 2px;
+    z-index: 300;
+}

@@ -1,0 +1,80 @@
+<mt:setvarblock name="page_title"><__trans phrase="File Info"></mt:setvarblock>
+
+<mt:setvarblock name="related_content">
+    <mt:setvarblock name="index_link"><a href="<mtapp:link mode="list_fileinfo">"><__trans phrase="indexes"></a></mt:setvarblock>
+    <mtapp:widget
+        id="indexes"
+        label="$index_link">
+        <ul>
+            <mt:loop name="indexes">
+                <li><a href="<mtapp:link mode="build_tracer" url="$url">"><mt:var tmpl_name></a></li>
+            </mt:loop>
+        </ul>
+    </mtapp:widget>
+    <mtapp:widget
+        id="individuals"
+        label="<__trans phrase="individuals">">
+        <ul>
+            <mt:loop name="individuals">
+                <li><a href="<mtapp:link mode="list_fileinfo" filter="$id">"><mt:var name></a></li>
+            </mt:loop>
+        </ul>
+    </mtapp:widget>
+    <mtapp:widget
+        id="pages"
+        label="<__trans phrase="pages">">
+        <ul>
+            <mt:loop name="pages">
+                <li><a href="<mtapp:link mode="list_fileinfo" filter="$id">"><mt:var name></a></li>
+            </mt:loop>
+        </ul>
+    </mtapp:widget>
+    <mtapp:widget
+        id="archives"
+        label="<__trans phrase="archives">">
+        <ul>
+            <mt:loop name="archives">
+                <li><a href="<mtapp:link mode="list_fileinfo" filter="$id">"><mt:var name></a></li>
+            </mt:loop>
+        </ul>
+    </mtapp:widget>
+</mt:setvarblock>
+
+<mt:setvarblock name="list_filter_form">
+<div class="listing-filter">
+    <div class="listing-filter-inner inner pkg">
+        <div class="filter">
+           <div class="filter-title">
+               <strong><__trans phrase="Showing Fileinfos of Template: [_1]" params="<mt:var name="filter_label">"></strong>
+           </div>
+        </div>
+    </div>
+</div>
+</mt:setvarblock>
+
+<mt:include name="include/header.tmpl">
+
+<$mt:var name="list_filter_form"$>
+<mtapp:listing empty_message="<__trans phrase="sorry, no fileinfos.">">
+    <mt:if __first__>
+        <thead>
+            <tr>
+                <th class="file-url"><__trans phrase="File URL"></th>
+                <mt:ignore>
+                    <th class="file-path"><__trans phrase="File Path"></th>
+                </mt:ignore>
+            </tr>
+        </thead>
+        <tbody>
+    </mt:if>
+            <tr class="<mt:if name="__odd__">odd<mt:else>even</mt:if> template-<$mt:var name="template_type"$>">
+                <td class="file-url"><mt:if name="url"><a href="<mtapp:link mode="build_tracer" url="$url">"><mt:var name="url" escape="html"></a><mt:else><span><__trans phrase="-"></span></mt:if></td>
+                <mt:ignore>
+                <td class="file-path"><mt:if name="file_path"><mt:var name="file_path" escape="html"><mt:else><span><__trans phrase="-"></span></mt:if></td>
+                </mt:ignore>
+            </tr>
+    <mt:if __last__>
+        </tbody>
+    </mt:if>
+</mtapp:listing>
+<mt:include name="include/footer.tmpl">

@@ -1,0 +1,192 @@
+<mt:setvarblock name="html_head" prepend="1">
+<link rel="stylesheet" href="<$mt:var name="static_uri"$>plugins/BuildTracer/styles/tracer.css" type="text/css" />
+<script type="text/javascript" src="<$mt:var name="static_uri"$>plugins/BuildTracer/js/build_tracer.js"></script>
+<script type="text/javascript">
+var BUILD_LOG = <mt:var log_json>;
+var TIMING = <mt:var timing>; 
+
+TC.attachLoadEvent( function() {
+    print_tracer(BUILD_LOG);
+});
+</script>
+
+</mt:setvarblock>
+
+<mt:setvarblock control>
+<div id="tracer-control">
+    <div id="control-toggle" class="control-switch" onclick="toggle_control_display()"></div>
+    <div id="control-wrapper">
+    <mtapp:widget id="control-contents" class="widget control-widget" tabbed="1" label="<__trans phrase="tracer control">" can_close="0">
+        <mt:setvarblock name="widget_header"><ul class="tabs">
+            <li id="fileinfo-tab" class="tab selected-tab" mt:tab="fileinfo" mt:command="select-tab"><a href="javascript:void(0)"><span><__trans phrase="File Info"></span></a></li>
+            <li id="info-tab" class="tab" mt:tab="info" mt:command="select-tab"><a href="javascript:void(0)"><span><__trans phrase="Info"></span></a></li>
+            <li id="options-tab" class="tab" mt:tab="options" mt:command="select-tab"><a href="javascript:void(0)"><span><__trans phrase="Options"></span></a></li>
+            <li id="legend-tab" class="tab" mt:tab="legend" mt:command="select-tab"><a href="javascript:void(0)"><span><__trans phrase="Legend"></span></a></li>
+
+<mt:if buildtracer_debug>
+            <li id="trace-vars-tab" class="tab" mt:tab="trace-vars" mt:command="select-tab"><a href="javascript:void(0)"><span><__trans phrase="Trace Vars"></span></a></li>
+            <li id="trace-stash-tab" class="tab" mt:tab="trace-stash" mt:command="select-tab"><a href="javascript:void(0)"><span><__trans phrase="Trace Stash"></span></a></li>
+<li id="debug-tab" class="tab" mt:tab="debug" mt:command="select-tab"><a href="javascript:void(0)"><span><__trans phrase="Debug"></span></a></li>
+</mt:if>
+
+        </ul></mt:setvarblock>
+
+        <div id="fileinfo-panel" class="control-panel" mt:tab-content="fileinfo">
+        <table>
+            <tr><th>url</th><td><mt:var fi_url></td></tr>
+            <tr><th>type</th><td><mt:var fi_at></td></tr>
+            <tr><th><__trans phrase="template"></th>
+                <td><a href="<mtapp:link mode="view" type="template" id="$tmpl_id" blog_id="$blog_id">"><mt:var tmpl_name></a>( <mt:var tmpl_type> )</td></tr>
+        
+            <mt:if timing>
+                <tr><th>build time</th>
+                    <td><mt:var total_time> sec</td></tr>
+            </mt:if>
+        </table>
+        </div>
+
+        <div id="info-panel" class="control-panel hidden" mt:tab-content="info">
+            <div id="tag-info">
+                <div id="info-misc"></div>
+                <div id="info-screen">
+                    <div id="info-vars">vars</div>
+                    <div id="info-output" class="hidden">output</div>
+                </div>
+                <div id="info-switch">
+                    <div id="button-info-var" class="control-switch control-switch-selected" onclick="select_info('info-vars')"></div>
+                    <div id="button-info-output" class="control-switch" onclick="select_info('info-output')"></div>
+                </div>
+            </div>
+        </div>
+        <div id="options-panel" class="control-panel-body hidden" mt:tab-content="options">
+            <ul>
+                    <li><a href="javascript:window.location='<mt:AdminCGIPath><mt:AdminScript>?__mode=build_tracer&blog_id=<mt:var blog_id>&url=' + (location.href);">bookmarklet</a></li>
+            </ul>
+        </div>
+
+
+<mt:if buildtracer_debug>
+        <form name="cfg_form" method="post" action="<mt:var name="script_url">">
+            <input type="hidden" name="url" value="<mt:var name="fi_url">" />
+            <input type="hidden" name="__mode" value="build_tracer" />
+            <input type="hidden" name="blog_id" value="<mt:var blog_id>" />
+
+            <div id="trace-vars-panel" class="control-panel-body hidden" mt:tab-content="trace-vars">
+                <ul>
+                    <mt:loop varstock>
+                        <li><label for="trace_vars"><input type="checkbox" name="trace_vars" value="<mt:var var_name>" <mt:if stocked>checked="checked" </mt:if>/><mt:var var_name></label></li>
+                    </mt:loop>
+                </ul>
+                <div class="control-panel-footer"><input type="submit" /></div>
+            </div>
+
+            <div id="trace-stash-panel" class="control-panel-body hidden" mt:tab-content="trace-stash">
+                <ul>
+                    <mt:loop stashstock>
+                        <li><label for="trace_stash"><input type="checkbox" name="trace_stash" value="<mt:var stash_name>" <mt:if stocked>checked="checked" </mt:if>/><mt:var stash_name></label></li>
+                    </mt:loop>
+                </ul>
+                <div class="control-panel-footer"><input type="submit" /></div>
+            </div>
+        </form>
+
+</mt:if>
+
+        <div id="legend-panel" class="control-panel hidden" mt:tab-content="legend">
+            <dl>
+            <div class="legend-block">
+            <dt>block</dt>
+                <dd>
+                <ul>
+                    <li><div class="legend-box block-tag">&nbsp;</div><__trans phrase="block tag"></li>
+                    <li><div class="legend-line block-tag"><span class="tag-name"><__trans phrase="tag name"></span></div></li>
+                    <li><div class="legend-line block-tag"><span class="tag-args"><__trans phrase="modifiers"></span></div></li>
+                    <li><div class="legend-line block-tag"><span class="block-output"><__trans phrase="output"></span></div></li>
+                 </ul>
+            </dd>
+            </div>
+            <div class="legend-block">
+            <dt>function</dt>
+            <dd>
+                <ul>
+                    <li><div class="legend-box function-tag">&nbsp;</div><__trans phrase="function tag"></li>
+                    <li><div class="legend-line function-tag"><span class="tag-name"><__trans phrase="tag name"></span></div></li>
+                <li><div class="legend-line function-tag"><span class="tag-args"><__trans phrase="modifiers"></span></div></li>
+                <li><div class="legend-line function-tag"><span class="function-output"><__trans phrase="output"></span></div></li>
+                 </ul>
+            </dd>
+            </div>
+            <div class="legend-block">
+            <dt>tokens</dt>
+            <dd>
+                <ul>
+                <li><div class="legend-box tokens">&nbsp;</div><__trans phrase="tokens"></li>
+                <li><div class="legend-box tokens-else">&nbsp;</div><__trans phrase="tokens-else"></li>
+                 </ul>
+            </dd>
+            </div>
+<mt:if buildtracer_debug>
+            <div class="legend-block">
+            <dt>vars</dt>
+            <dd>
+                <ul>
+                <li><div class="diff-section diff-vars legend-line"><span class="diff-new"><__trans phrase="new var"></span></div></li>
+                <li><div class="diff-section diff-vars legend-line"><span class="diff-changed"><__trans phrase="changed var"></span></div></li>
+                <li><div class="diff-section diff-vars legend-line"><span class="diff-gone"><__trans phrase="vanished vars"></span></div></li>
+                 </ul>
+            </dd>
+            </div>
+            <div class="legend-block">
+            <dt>stashes</dt>
+            <dd>
+                <ul>
+                <li><div class="diff-section diff-stash legend-line"><span class="diff-new"><__trans phrase="new stash"></span></div></li>
+                <li><div class="diff-section diff-stash legend-line"><span class="diff-changed"><__trans phrase="changed stash"></span></div></li>
+                <li><div class="diff-section diff-stash legend-line"><span class="diff-gone"><__trans phrase="vanished stash"></span></div></li>
+                 </ul>
+            </dd>
+            </div>
+</mt:if>
+            <div class="legend-block">
+            <dt>misc</dt>
+            <dd>
+                <ul>
+                <li><div class="time-elapsed legend-line"><__trans phrase="tag proc time / total time (sec)"></div></li>
+                <li><div class="build-log-element"><__trans phrase="build block"><div class="build-log-element-nest"><__trans phrase="nested build"></div></div></li>
+                <li><span class="plain-text"><__trans phrase="plaintext"></span></li>
+            </ul>
+            </dd>
+            </div>
+            </dl>
+        </div>
+        <mt:if buildtracer_debug>
+            <div id="debug-panel" class="control-panel-body hidden" mt:tab-content="debug">
+                <a href="javascript:print_tracer(BUILD_LOG)">build</a>
+                <a href="javascript:print_output(BUILD_LOG)">output</a>
+            </div>
+                    <mt:if can_timing>
+                        <input type="checkbox" name="timing" value="1"<mt:if timing> checked="checked"</mt:if> /><label for="timing">show proccess time</label>
+                    <mt:else>
+                        <__trans phrase="cannot time: Time::HiRes required">
+                    </mt:if>
+        </mt:if>
+    </mtapp:widget>
+    <div id="control-switch-container">
+        <div id="button-go-auto" class="control-switch" onclick="toggle_autowalk()"></div>
+        <div id="button-go-head" class="control-switch" onclick="jump_tag(0,1)"></div>
+        <div id="button-go-prev" class="control-switch" onclick="step_tag('prev')"></div>
+        <div id="button-go-next" class="control-switch" onclick="step_tag('next')"></div>
+    </div>
+    </div>
+</div>
+</mt:setvarblock>
+
+<mt:include name="include/header.tmpl">
+<mt:var control>
+<div id="tracer-wrapper">
+    <div id="tracer">
+    </div>
+</div>
+<div class="hidden" id="bt_popup"></div>
+<mt:include name="include/footer.tmpl">
+
