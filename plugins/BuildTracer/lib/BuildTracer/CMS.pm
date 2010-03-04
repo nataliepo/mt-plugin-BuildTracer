@@ -191,7 +191,7 @@ sub trace {
 
     $encoder->(\$log);
     require JSON;
-    my $log_json = JSON::objToJson($log, {skipinvalid => 1});
+    my $log_json = JSON::objToJson($log);
     $tmpl->param('log_json' => $log_json );
 #    foreach my $v (@TRACE_VARS) {
 #        $VAR_STOCK{$v}->{stocked} = 1;
